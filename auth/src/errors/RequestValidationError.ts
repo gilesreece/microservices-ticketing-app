@@ -1,6 +1,0 @@
-
-class RequestValidationError extends Error {
-
-
-
-}
