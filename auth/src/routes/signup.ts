@@ -1,8 +1,9 @@
+import jwt from 'jsonwebtoken';
 import Router, { Request, Response, NextFunction} from 'express'
-import {body, validationResult} from 'express-validator';
-import {RequestValidationError} from "../errors/request-validation-error";
+import {body} from 'express-validator';
 import {User} from "../models/user.model";
 import {BadRequestError} from "../errors/bad-request-error";
+import {validateRequest} from "../middleware/validate-request";
 
 const router = Router();
 
@@ -16,13 +17,8 @@ router.post('/api/users/signup', [
                 min: 4
             })
             .withMessage('Password must be greater than 4')],
+    validateRequest,
     async (req: Request, res: Response) => {
-
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            throw new RequestValidationError(errors.array());
-        }
 
         const { email, password } = req.body;
 
@@ -34,6 +30,17 @@ router.post('/api/users/signup', [
 
         const user = User.build({email, password});
         await user.save();
+
+        // Generate JWT store on the sessions object
+
+        const userJwt = jwt.sign({
+            id: user.id,
+            email: user.email
+        }, process.env.JWT_KEY!);
+
+        req.session = {
+            jwt: userJwt
+        };
 
         res.status(201).send(user);
 
