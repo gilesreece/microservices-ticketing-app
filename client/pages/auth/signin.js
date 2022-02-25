@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 
@@ -6,7 +6,7 @@ const signupAuth = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { doRequest, errors } = useRequest({
-        url: '/api/users/signup',
+        url: '/api/users/signin',
         method: 'post',
         body: {
             email, password
@@ -22,7 +22,7 @@ const signupAuth = () => {
 
     return (
         <form onSubmit={onSumbit}>
-            <h1>Signup</h1>
+            <h1>Sign in</h1>
             <div className="form-group">
                 <label>Email address</label>
                 <input className="form-control" value={email} onChange={e => setEmail(e.target.value)}/>
@@ -32,7 +32,7 @@ const signupAuth = () => {
                 <input type="password" className="form-control" value={password}
                        onChange={e => setPassword(e.target.value)}/>
             </div>
-            <button className="btn btn-primary">Sign Up</button>
+            <button className="btn btn-primary">Sign In</button>
             {errors}
         </form>
     );

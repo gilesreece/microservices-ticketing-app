@@ -34,7 +34,7 @@ declare global {
 global.signin = () => {
     // Build a JWT payload { id, email }
     const payload = {
-        id: '1naisj1in',
+        id: new mongoose.Types.ObjectId().toHexString(),
         email: 'test@test.com'
     }
 
@@ -42,7 +42,7 @@ global.signin = () => {
     const token = jwt.sign(payload, process.env.JWT_KEY!);
 
     // Build session object  { jwt: MY_JWT }
-    const session = { jwt: token};
+    const session = {jwt: token};
 
     // Turn that session into JSON
     const sessionJSON = JSON.stringify(session);

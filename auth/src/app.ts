@@ -7,16 +7,15 @@ import {signupRouter} from "./routes/signup";
 import {currentUserRouter} from "./routes/current-user";
 import {signinRouter} from "./routes/signin";
 import {signoutRouter} from "./routes/signout";
-import errorHandler from "./middleware/error-handler";
-import {NotFoundError} from "./errors/not-found-error";
+import { errorHandler ,NotFoundError} from "@gilesreece2/common";
 
 const app = express();
 app.set('trust proxy', true);
+app.use(json());
 app.use(cookieSession({
     signed: false,
     secure: process.env.NODE_ENV !== 'test',
 }));
-app.use(json());
 app.use(signupRouter);
 app.use(currentUserRouter);
 app.use(signinRouter);

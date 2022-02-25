@@ -2,8 +2,7 @@ import jwt from 'jsonwebtoken';
 import Router, { Request, Response, NextFunction} from 'express'
 import {body} from 'express-validator';
 import {User} from "../models/user.model";
-import {BadRequestError} from "../errors/bad-request-error";
-import {validateRequest} from "../middleware/validate-request";
+import {BadRequestError, validateRequest} from "@gilesreece2/common";
 
 const router = Router();
 
