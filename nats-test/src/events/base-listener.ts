@@ -10,14 +10,13 @@ export abstract class Listener<T extends Event> {
 
     abstract subject: string;
     abstract queueGroupName: string;
-    protected ackWait = 5 * 1000;
+    abstract onMessage(data: T['data'], msg: Message): void
     private client: Stan;
+    protected ackWait = 5 * 1000;
 
     constructor(client: Stan) {
         this.client = client;
     }
-
-    abstract onMessage(data: any, msg: Message): void
 
     subscriptionOptions() {
         return this.client
