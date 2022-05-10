@@ -16,4 +16,20 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: gilesreece/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: gilesreece/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
 
