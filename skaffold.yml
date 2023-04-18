@@ -6,7 +6,7 @@ deploy:
       - ./infra/k8s/*
 build:
   local:
-    push: false
+    push: true
   artifacts:
     - image: gilesreece/auth
       context: auth
@@ -42,6 +42,14 @@ build:
             dest: .
     - image: gilesreece/expiration
       context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: gilesreece/payments
+      context: payments
       docker:
         dockerfile: Dockerfile
       sync:
